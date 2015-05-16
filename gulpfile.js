@@ -111,8 +111,6 @@ gulp.task('e2e-test', function(){
     }));
 });
 
-gulp.task("test", ["unit-test","e2e-test"]);
-
 //******************************************************************************
 //* BAKE
 //******************************************************************************
@@ -160,6 +158,16 @@ gulp.task('serve', function(cb) {
 //******************************************************************************
 //* DEFAULT
 //******************************************************************************
+gulp.task('test', function (cb) {
+  runSequence(
+    "lint",
+    ["build-source", "build-test"],
+    ["bundle-source", "bundle-test"],
+    ["unit-test", "e2e-test"],
+    "serve",
+    cb);
+});
+
 gulp.task('default', function (cb) {
   runSequence(
     "lint",
