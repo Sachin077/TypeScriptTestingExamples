@@ -49,7 +49,7 @@ gulp.task("build-source", function() {
 });
 
 gulp.task("build-test", function() {
-  return gulp.src(__dirname + "/test/bdd.test.ts")
+  return gulp.src(__dirname + "/test/*.test.ts")
              .pipe(tsc(tsProject))
              .js.pipe(gulp.dest(__dirname + "/build/test/"));
 });
@@ -87,6 +87,23 @@ gulp.task("bundle-test", function () {
     .pipe(gulp.dest(__dirname + "/bundled/test/"));
 });
 
+gulp.task("bundle-e2e-test", function () {
+
+  // in this demo we will only execute the bdd tests
+  // but tdd examples are available in the /test directory
+
+  var b = browserify({
+    standalone : 'test',
+    entries: __dirname + "/build/test/e2e.test.js",
+    debug: true
+  });
+
+  return b.bundle()
+    .pipe(source("e2e.test.js"))
+    .pipe(buffer())
+    .pipe(gulp.dest(__dirname + "/bundled/e2e-test/"));
+});
+
 //******************************************************************************
 //* TEST
 //******************************************************************************
@@ -100,14 +117,13 @@ gulp.task("unit-test", function(cb) {
 });
 
 // run itegration (e2e) test
+// run selenium befor you run this task
+// $ selenium-standalone start
+// https://www.npmjs.com/package/selenium-standalone
 gulp.task('e2e-test', function(){
   return gulp.src('')
     .pipe(nightwatch({
-      configFile: __dirname + '/nightwatch.json',
-      cliArgs: {
-        env: 'chrome',
-        tag: 'sandbox'
-      }
+      configFile: __dirname + '/nightwatch.json'
     }));
 });
 
@@ -172,10 +188,9 @@ gulp.task('default', function (cb) {
   runSequence(
     "lint",
     ["build-source", "build-test"],
-    ["bundle-source", "bundle-test"],
-    ["unit-test", "e2e-test"],
+    ["bundle-source", "bundle-test", "bundle-e2e-test"],
+    ["unit-test"],
     "compress",
     "header",
-    "serve",
     cb);
 });

@@ -2,16 +2,15 @@ var test = {
   'Calculator pow e2e test example' : function (client) {
     client
       .url('http://localhost:8080/')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('body', 1000) // loading time 1 second
       .assert.title('TypeScriptTesting')
-      .assert.visible('input[@id=base]')
-      .assert.visible('input[@id=exponent]')
-      .setValue('input[@id=base]', '2')
-      .setValue('input[@id=exponent]', '3')
-      .waitForElementVisible('button[@id=submit]', 1000)
-      .click('button[@id=submit]')
-      .pause(1000)
-      .assert.containsText('input[@id=result]', '8')
+      .assert.visible('input#base')
+      .assert.visible('input#exponent')
+      .setValue('input#base', '2')
+      .setValue('input#exponent', '3')
+      .click('button#submit')
+      .pause(100) // pow() should be really fast
+      .assert.value('input#result', '8')
       .end();
   }
 };
