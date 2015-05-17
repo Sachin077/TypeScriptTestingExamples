@@ -1,3 +1,15 @@
+/*
+* Before you can execute the e2e test:
+* $ gulp e2e-test
+*
+* We need to run the application:
+* $ gulp serve
+*
+* and start karma:
+* $ npm install selenium-standalone@latest -g
+* $ selenium-standalone install
+* $ selenium-standalone start
+*/
 var test = {
   'Calculator pow e2e test example' : function (client) {
     client

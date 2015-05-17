@@ -34,6 +34,7 @@
     "chai": "^2.3.0",
     "gulp": "^3.8.11",
     "gulp-coveralls": "^0.1.4",
+    "gulp-docco": "0.0.4",
     "gulp-header": "^1.2.2",
     "gulp-nightwatch": "^0.1.1",
     "gulp-run": "^1.6.8",

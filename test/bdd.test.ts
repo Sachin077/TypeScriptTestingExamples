@@ -67,7 +67,7 @@ describe('BDD test example for MathDemo class \n', () => {
   // 2. >  100ms warning
   // 3. > 2000ms fatal error (execution of test will not continue)
 
-  // Is slow and we will get a warning
+  // Is slow and we will get a warning 40ms
   it('should return the correct numeric value for pow (async) in slow networks\n', (done) => {
     var math : MathInterface = new MathDemo();
     math.powAsyncSlow(2, 3, function(result){
@@ -78,7 +78,7 @@ describe('BDD test example for MathDemo class \n', () => {
     });
   });
 
-  // Is really slow and we will get a warning
+  // Is really slow and we will get a warning 100ms
   it('should return the correct numeric value for pow (async) in really slow networks\n', (done) => {
     var math : MathInterface = new MathDemo();
     math.powAsyncReallySlow(2, 3, function(result){
@@ -101,5 +101,12 @@ describe('BDD test example for MathDemo class \n', () => {
     });
   });
   */
+
+  // how to test for errors
+  it('should throw an exception \n', (done) => {
+    var math : MathInterface = new MathDemo();
+    expect(math.bad).to.throw(Error);
+  });
+
 
 });

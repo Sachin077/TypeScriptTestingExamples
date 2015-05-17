@@ -5,4 +5,5 @@ interface MathInterface {
   powAsyncSlow(base: number, exponent: number, cb : (result : number) => void);
   powAsyncReallySlow(base: number, exponent: number, cb : (result : number) => void);
   powAsyncTooSlow(base: number, exponent: number, cb : (result : number) => void);
+  bad() : void;
 }

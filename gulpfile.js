@@ -3,6 +3,7 @@
 //******************************************************************************
 //* DEPENDENCIES
 //******************************************************************************
+// Check out package.json for full list of dependencies!
 var gulp        = require("gulp"),
     browserify  = require("browserify"),
     source      = require("vinyl-source-stream"),
@@ -22,6 +23,7 @@ var gulp        = require("gulp"),
 //******************************************************************************
 //* LINT
 //******************************************************************************
+// lint app and test code
 gulp.task("lint", function() {
   return gulp.src([
                 __dirname + "/source/**/**.ts",
@@ -34,6 +36,7 @@ gulp.task("lint", function() {
 //******************************************************************************
 //* BUILD
 //******************************************************************************
+// The TypeScript compiler settings
 var tsProject = tsc.createProject({
   removeComments : false,
   noImplicitAny : false,
@@ -42,12 +45,14 @@ var tsProject = tsc.createProject({
   declarationFiles : false
 });
 
+// compile app code
 gulp.task("build-source", function() {
   return gulp.src(__dirname + "/source/*.ts")
              .pipe(tsc(tsProject))
              .js.pipe(gulp.dest(__dirname + "/build/source/"));
 });
 
+// compile test code
 gulp.task("build-test", function() {
   return gulp.src(__dirname + "/test/*.test.ts")
              .pipe(tsc(tsProject))
@@ -57,6 +62,7 @@ gulp.task("build-test", function() {
 //******************************************************************************
 //* BUNDLE
 //******************************************************************************
+// bundle source test to be able to run them on a web browser
 gulp.task("bundle-source", function () {
   var b = browserify({
     standalone : 'demos',
@@ -70,6 +76,7 @@ gulp.task("bundle-source", function () {
     .pipe(gulp.dest(__dirname + "/bundled/source/"));
 });
 
+// bundle unit test to be able to run them on a web browser
 gulp.task("bundle-test", function () {
 
   // in this demo we will only execute the bdd tests
@@ -87,6 +94,7 @@ gulp.task("bundle-test", function () {
     .pipe(gulp.dest(__dirname + "/bundled/test/"));
 });
 
+// bundle e2e test to be able to run them on a web browser
 gulp.task("bundle-e2e-test", function () {
 
   // in this demo we will only execute the bdd tests
@@ -105,6 +113,27 @@ gulp.task("bundle-e2e-test", function () {
 });
 
 //******************************************************************************
+//* DOCUMENT
+//******************************************************************************
+/*
+* Create annotated source code documentation website
+* normally we will only do this for app code not test code but because this is
+* a repo for learning how to test we will also document tests
+*
+* build and bundle the code:
+* $ gulp build-source
+* $ gulp build-test
+*
+* And then document it:
+* $ gulp document
+*/
+gulp.task("document", function () {
+  return gulp.src(__dirname + "/build/*/*.js")
+             .pipe(docco())
+             .pipe(gulp.dest(__dirname + "/documentation"));
+});
+
+//******************************************************************************
 //* TEST
 //******************************************************************************
 
@@ -116,10 +145,21 @@ gulp.task("unit-test", function(cb) {
   }, cb);
 });
 
-// run itegration (e2e) test
-// run selenium befor you run this task
-// $ selenium-standalone start
-// https://www.npmjs.com/package/selenium-standalone
+/*
+* Run itegration (e2e) test
+* Before you can execute the e2e test:
+* $ gulp e2e-test
+*
+* We need to run the application:
+* $ gulp serve
+*
+* and start karma:
+* $ npm install selenium-standalone@latest -g
+* $ selenium-standalone install
+* $ selenium-standalone start
+*
+* https://www.npmjs.com/package/selenium-standalone
+*/
 gulp.task('e2e-test', function(){
   return gulp.src('')
     .pipe(nightwatch({
@@ -130,12 +170,14 @@ gulp.task('e2e-test', function(){
 //******************************************************************************
 //* BAKE
 //******************************************************************************
+// Compress your application to increase performance
 gulp.task("compress", function() {
   return gulp.src(__dirname + "/bundled/source/demos.js")
              .pipe(uglify({ preserveComments : false }))
              .pipe(gulp.dest(__dirname + "/dist/"))
 });
 
+// Add copyright details to the top of the minified file
 gulp.task("header", function() {
 
   var pkg = require(__dirname + "/package.json");
@@ -156,6 +198,7 @@ gulp.task("header", function() {
 //******************************************************************************
 //* SERVE
 //******************************************************************************
+// Run the application in a local web server
 gulp.task('serve', function(cb) {
     browserSync({
         port: 8080,
@@ -174,6 +217,7 @@ gulp.task('serve', function(cb) {
 //******************************************************************************
 //* DEFAULT
 //******************************************************************************
+// runtests
 gulp.task('test', function (cb) {
   runSequence(
     "lint",
@@ -184,11 +228,13 @@ gulp.task('test', function (cb) {
     cb);
 });
 
+// default task
 gulp.task('default', function (cb) {
   runSequence(
     "lint",
     ["build-source", "build-test"],
     ["bundle-source", "bundle-test", "bundle-e2e-test"],
+    "document",
     ["unit-test"],
     "compress",
     "header",

@@ -102,4 +102,12 @@ describe('Test Suite \n', () => {
     });
   });
   */
+
+  // how to test for errors
+  it('should throw an exception \n', (done) => {
+    var math : MathInterface = new MathDemo();
+    assert.throw(math.bad);
+  });
+
+
 });
