@@ -1,5 +1,5 @@
 # TypeScriptTesting
-Learn how to use testing tools with typescript with this sample repository. Test and configuration files have many comments to help you to understand the process.
+Learn how to use testing tools with typescript with this sample repository. Test and configuration files have many comments to help you to understand how to use many popular testing tools.
 
 ![demo](https://pbs.twimg.com/media/CFHvtqDW0AADSnU.png:large)
 
