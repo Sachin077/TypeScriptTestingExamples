@@ -12,6 +12,6 @@ The demo project includes:
 Extras:
 - **Annotated source code documentation generation** powered by Docco
 - **Linted TypeScript** powered by TsLint
-- **Bundle TypeScript external CommonJS modules** bowered by Browserify
-- **Code Compressioon** powered by gulp-uglify
+- **Bundled TypeScript external CommonJS modules** bowered by Browserify
+- **Code Compression** powered by gulp-uglify
 - **Copyright header** powered by gulp-header
