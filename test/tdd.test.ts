@@ -89,9 +89,12 @@ describe('Test Suite \n', () => {
       done(); // invoke done() inside your call back or fullfiled promises
     });
   });
+
   /*
+
   // this function takes over 2000ms to complete and
   // will thereofore stop the test execution
+
   it('too slow will cause build to fail\n', (done) => {
     var math : MathInterface = new MathDemo();
     math.powAsyncTooSlow(2, 3, function(result){
@@ -101,6 +104,7 @@ describe('Test Suite \n', () => {
       done(); // invoke done() inside your call back or fullfiled promises
     });
   });
+  
   */
 
   // how to test for errors

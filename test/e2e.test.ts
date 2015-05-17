@@ -21,7 +21,7 @@ var test = {
       .setValue('input#base', '2')
       .setValue('input#exponent', '3')
       .click('button#submit')
-      .pause(100) // pow() should be really fast
+      .pause(500) // pow() should be really fast
       .assert.value('input#result', '8')
       .end();
   }
