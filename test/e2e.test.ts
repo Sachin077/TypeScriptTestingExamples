@@ -16,6 +16,7 @@ var test = {
       .url('http://localhost:8080/')
       .waitForElementVisible('body', 1000) // loading time 1 second
       .assert.title('TypeScriptTesting')
+      .waitForElementVisible('input#base', 1000) // rendered by JS
       .assert.visible('input#base')
       .assert.visible('input#exponent')
       .setValue('input#base', '2')

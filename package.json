@@ -27,7 +27,10 @@
   "bugs": {
     "url": "https://github.com/remojansen/TypeScriptTesting/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap": "^3.3.4",
+    "jquery": "^2.1.4"
+  },
   "devDependencies": {
     "browser-sync": "^2.7.1",
     "browserify": "^10.2.0",

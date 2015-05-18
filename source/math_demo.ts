@@ -49,8 +49,13 @@ class MathDemo implements MathInterface{
   }
 
   // used to showcase how to assert that an error is thrown
-  public bad() {
-    throw new Error("Error!");
+  public bad(foo : any) {
+    if(foo == null){
+      throw new Error("Error!");
+    }
+    else {
+      //...
+    }
   }
 
 

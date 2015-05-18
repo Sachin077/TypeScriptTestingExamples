@@ -1,7 +1,7 @@
-///<reference path="../typings/tsd.d.ts" />
 ///<reference path="../source/interfaces.d.ts" />
 
 import MathDemo = require("../source/math_demo");
+import CalculatorWidget = require("../source/calculator_widget");
 
 // Here we will write some test for the demos in the source
 // directory using a TDD style.TBDD style assertions are
@@ -58,7 +58,7 @@ describe('Test Suite \n', () => {
       var expected = 8;
       assert.typeOf(result, 'number');
       assert.equal(result, expected);
-      done(); // invoke done() inside your call back or fullfiled promises
+      done(); // invoke done() inside your call back or fulfilled promises
     });
   });
 
@@ -75,7 +75,7 @@ describe('Test Suite \n', () => {
       var expected = 8;
       assert.typeOf(result, 'number');
       assert.equal(result, expected);
-      done(); // invoke done() inside your call back or fullfiled promises
+      done(); // invoke done() inside your call back or fulfilled promises
     });
   });
 
@@ -86,7 +86,7 @@ describe('Test Suite \n', () => {
       var expected = 8;
       assert.typeOf(result, 'number');
       assert.equal(result, expected);
-      done(); // invoke done() inside your call back or fullfiled promises
+      done(); // invoke done() inside your call back or fulfilled promises
     });
   });
 
@@ -101,17 +101,77 @@ describe('Test Suite \n', () => {
       var expected = 8;
       assert.typeOf(result, 'number');
       assert.equal(result, expected);
-      done(); // invoke done() inside your call back or fullfiled promises
+      done(); // invoke done() inside your call back or fulfilled promises
     });
   });
-  
+
   */
 
   // how to test for errors
-  it('should throw an exception \n', (done) => {
+  it('should throw an exception when no parameters passed \n', () => {
     var math : MathInterface = new MathDemo();
     assert.throw(math.bad);
   });
 
+
+});
+
+
+
+describe('TDD test example for CalculatorWidget class \n', () => {
+
+  before(function() {
+    $("body").append('<div id="widget"/>');
+  });
+
+  beforeEach(function() {
+    $("#widget").html('');
+  });
+
+  // showcases how to spy on functions to assert that a function has been invoked
+  it('should invoke onSubmit when #submit.click is triggered \n', () => {
+    var math : MathInterface = new MathDemo();
+    var calculator = new CalculatorWidget(math);
+
+    calculator.render("#widget");
+    // spy on onSubmit
+    var onSubmitSpy = sinon.spy(calculator, "onSubmit");
+
+    // initialize inputs and trigger click on #submit
+    $('#base').val("2");
+    $('#exponent').val("3");
+    $("#submit").trigger("click");
+
+    // assert calculator.onSubmit was invoked
+    assert.equal(onSubmitSpy.called, true);
+    assert.equal(onSubmitSpy.callCount, 1);
+    assert.equal($("#result").val(), "8");
+  });
+
+  // showcases how to use stub to isolate a component being
+  // tested (CalculatorWidget) from its dependencies (MathDemo)
+  // also showcases how to test asyn code
+  it('onSubmit should set #result value when #submit.click is triggered \n', (done) => {
+    var math : MathInterface = new MathDemo();
+
+    // replace pow method with stub
+    sinon.stub(math, "pow", function(a, b) {
+      // assert that CalculatorWidget.onSubmit is invoking
+      // math.pow with the rigth arguments
+      assert.equal(a, 2);
+      assert.equal(b, 3);
+
+      done();
+    });
+
+    // initialize inputs and trigger click on #submit
+    var calculator = new CalculatorWidget(math);
+
+    calculator.render("#widget");
+    $('#base').val("2");
+    $('#exponent').val("3");
+
+    $("#submit").trigger("click");
+  });
 
 });

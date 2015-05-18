@@ -138,7 +138,7 @@ gulp.task("document", function () {
 //******************************************************************************
 
 // run unit test
-gulp.task("unit-test", function(cb) {
+gulp.task("run-unit-test", function(cb) {
   karma.start({
     configFile : __dirname + "/karma.conf.js",
     singleRun: true
@@ -160,7 +160,7 @@ gulp.task("unit-test", function(cb) {
 *
 * https://www.npmjs.com/package/selenium-standalone
 */
-gulp.task('e2e-test', function(){
+gulp.task('run-e2e-test', function(){
   return gulp.src('')
     .pipe(nightwatch({
       configFile: __dirname + '/nightwatch.json'
@@ -223,7 +223,7 @@ gulp.task('test', function (cb) {
     "lint",
     ["build-source", "build-test"],
     ["bundle-source", "bundle-test"],
-    ["unit-test", "e2e-test"],
+    ["run-unit-test", "run-e2e-test"],
     "serve",
     cb);
 });
@@ -235,7 +235,7 @@ gulp.task('default', function (cb) {
     ["build-source", "build-test"],
     ["bundle-source", "bundle-test", "bundle-e2e-test"],
     "document",
-    ["unit-test"],
+    ["run-unit-test"],
     "compress",
     "header",
     cb);

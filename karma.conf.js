@@ -1,9 +1,6 @@
 module.exports = function (config) {
   'use strict';
 
-  var testFiles = __dirname + '/bundled/test/bdd.test.js',
-      coverageFolder = __dirname + '/coverage/';
-
   config.set({
       basePath: '',
       frameworks: ['mocha', 'chai', 'sinon'],
@@ -11,7 +8,7 @@ module.exports = function (config) {
       reporters: ['progress', 'coverage'],
       coverageReporter: {
         type : 'lcov',
-        dir : coverageFolder,
+        dir : __dirname + '/coverage/'
       },
       plugins : [
         'karma-coverage',
@@ -26,7 +23,9 @@ module.exports = function (config) {
         '**/bundled/test/bdd.test.js' : 'coverage'
       },
       files : [
-        testFiles
+        { pattern: __dirname + "/bundled/test/bdd.test.js", included: true },
+        { pattern: __dirname + "/node_modules/jquery/dist/jquery.min.js", included: true },
+        { pattern: __dirname + "/node_modules/bootstrap/dist/js/bootstrap.min.js", included: true }
       ],
       client : {
         // we can customize the mocha options
@@ -39,6 +38,6 @@ module.exports = function (config) {
       port: 9876,
       colors: true,
       autoWatch: false,
-      logLevel: config.LOG_INFO
+      logLevel: config.DEBUG
   });
 };

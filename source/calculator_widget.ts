@@ -1,45 +1,68 @@
 ///<reference path="./interfaces.d.ts" />
 
-class CalculatorWidget {
+class CalculatorWidget implements CalculatorWidgetInterface{
 
  private _math : MathInterface;
  private _dom : any;
 
  constructor(math : MathInterface) {
-
    if(math == null) throw new Error("Argument null exception!");
    this._math = math;
-
-   this._dom = {
-     base : HTMLInputElement,
-     exponent : HTMLInputElement,
-     result : HTMLInputElement,
-     btn : HTMLButtonElement
-   };
-
-   this._dom.base = (<HTMLInputElement>document.getElementById("base"));
-   this._dom.exponent = (<HTMLInputElement>document.getElementById("exponent"));
-   this._dom.result = (<HTMLInputElement>document.getElementById("result"));
-   this._dom.btn = (<HTMLButtonElement>document.getElementById("submit"));
+   this._dom = {};
  }
 
- initialize() {
-  this._dom.btn.addEventListener("click", (e) => {
-    this.onSubmit();
-  });
+ public render(id : string) {
+   $(id).html(template);
+   this._dom.$base = $("#base");
+   this._dom.$exponent = $("#exponent");
+   this._dom.$result = $("#result");
+   this._dom.$btn = $("#submit");
+
+   this._dom.$btn.on("click", (e) => {
+     this.onSubmit();
+   });
  }
 
- onSubmit() {
-   var base = parseInt(this._dom.base.value);
-   var exponent = parseInt(this._dom.exponent.value);
+ public onSubmit() {
+   var base = parseInt(this._dom.$base.val());
+   var exponent = parseInt(this._dom.$exponent.val());
 
    if(isNaN(base) || isNaN(exponent)) {
      alert("Base and exponent must be a number!");
    }
    else {
-     this._dom.result.value = this._math.pow(base, exponent);
+     this._dom.$result.val(this._math.pow(base, exponent));
    }
  }
 }
+
+// normally we will use a template system
+var template = '<div class="well">' +
+  '<div class="row">' +
+    '<div class="col-md-3">' +
+      '<div class="form-group">' +
+        '<label>Base</label>' +
+        '<input type="text" class="form-control" id="base" placeholder="0">' +
+        '</div>' +
+      '</div>' +
+    '<div class="col-md-3">' +
+      '<div class="form-group">' +
+        '<label>Exponent</label>' +
+          '<input type="text" class="form-control" id="exponent" placeholder="0">' +
+        '</div>' +
+      '</div>' +
+    '<div class="col-md-3">' +
+      '<div class="form-group">' +
+        '<label>Result</label>' +
+          '<input type="text" class="form-control" id="result" placeholder="1" disabled="disabled">' +
+        '</div>' +
+      '</div>' +
+    '<div class="col-md-3">' +
+      '<div class="form-group">' +
+        '<button id="submit" type="submit" class="btn btn-primary">Submit</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>' +
+'</div>';
 
 export = CalculatorWidget;
