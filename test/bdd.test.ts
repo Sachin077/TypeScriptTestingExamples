@@ -3,11 +3,11 @@
 import MathDemo = require("../source/math_demo");
 import CalculatorWidget = require("../source/calculator_widget");
 
-// Here we will write some test for the demos in the source
+// Here we will write some tests for the demos in the source
 // directory using a BDD style. BDD style assertions are
 // provided by expect() and should() which use a chainable
-// language to construct assertions. The should() has
-// function has some issues when used Internet Explorer,
+// language to construct assertions. The should() 
+// function has some issues when used in Internet Explorer,
 // so it will not be used in this demo.
 
 var expect = chai.expect; // http://chaijs.com/guide/styles/#expect
@@ -35,7 +35,7 @@ describe('BDD test example for MathDemo class \n', () => {
     console.log("afterEach() invoked!");
   });
 
-  // if() a single test containing one or more assetion
+  // it() is a single test containing one or more assertions
   it('should return the correct numeric value for PI \n', () => {
     var math : MathInterface = new MathDemo();
     expect(math.PI).to.equals(3.14159265359);
@@ -50,7 +50,7 @@ describe('BDD test example for MathDemo class \n', () => {
     expect(result).to.equal(expected);
   });
 
-  // to test asyn code we need to invoke done() when the execution is completed
+  // to test async code we need to invoke done() when the execution is completed
   it('should return the correct numeric value for pow (async) \n', (done) => {
     var math : MathInterface = new MathDemo();
     math.powAsync(2, 3, function(result) {
@@ -62,7 +62,7 @@ describe('BDD test example for MathDemo class \n', () => {
   });
 
   /*
-  // When testing async code mocha will let us know if a function takes to long
+  // When testing async code mocha will let us know if a function takes too long
   // to finish its execution. There are 3 levels of warning
   // 1. >   40ms low warning
   // 2. >  100ms warning
@@ -123,7 +123,7 @@ describe('BDD test example for CalculatorWidget class \n', () => {
 
   // showcases how to use stub to isolate a component being
   // tested (CalculatorWidget) from its dependencies (MathDemo)
-  // also showcases how to test asyn code
+  // also showcases how to test async code
   it('onSubmit should set #result value when #submit.click is triggered \n', (done) => {
     var math : MathInterface = new MathDemo();
 
