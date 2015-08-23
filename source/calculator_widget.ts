@@ -1,37 +1,39 @@
 ///<reference path="./interfaces.d.ts" />
+///<reference path="../typings/tsd.d.ts" />
 
 class CalculatorWidget implements CalculatorWidgetInterface{
 
  private _math : MathInterface;
- private _dom : any;
+ private $base: JQuery;
+ private $exponent: JQuery;
+ private $result: JQuery;
+ private $btn: JQuery;
 
  constructor(math : MathInterface) {
    if(math == null) throw new Error("Argument null exception!");
    this._math = math;
-   this._dom = {};
  }
 
  public render(id : string) {
    $(id).html(template);
-   this._dom.$base = $("#base");
-   this._dom.$exponent = $("#exponent");
-   this._dom.$result = $("#result");
-   this._dom.$btn = $("#submit");
-
-   this._dom.$btn.on("click", (e) => {
+   this.$base = $("#base");
+   this.$exponent = $("#exponent");
+   this.$result = $("#result");
+   this.$btn = $("#submit");
+   this.$btn.on("click", (e) => {
      this.onSubmit();
    });
  }
 
  public onSubmit() {
-   var base = parseInt(this._dom.$base.val());
-   var exponent = parseInt(this._dom.$exponent.val());
+   var base = parseInt(this.$base.val());
+   var exponent = parseInt(this.$exponent.val());
 
    if(isNaN(base) || isNaN(exponent)) {
      alert("Base and exponent must be a number!");
    }
    else {
-     this._dom.$result.val(this._math.pow(base, exponent));
+     this.$result.val(this._math.pow(base, exponent));
    }
  }
 }
@@ -65,4 +67,4 @@ var template = '<div class="well">' +
   '</div>' +
 '</div>';
 
-export = CalculatorWidget;
+export { CalculatorWidget };

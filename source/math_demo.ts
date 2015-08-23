@@ -61,4 +61,4 @@ class MathDemo implements MathInterface{
 
 }
 
-export = MathDemo;
+export { MathDemo };

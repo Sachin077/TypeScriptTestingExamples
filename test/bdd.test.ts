@@ -1,12 +1,12 @@
 ///<reference path="../source/interfaces.d.ts" />
 
-import MathDemo = require("../source/math_demo");
-import CalculatorWidget = require("../source/calculator_widget");
+import { MathDemo } from "../source/math_demo";
+import { CalculatorWidget } from "../source/calculator_widget";
 
 // Here we will write some tests for the demos in the source
 // directory using a BDD style. BDD style assertions are
 // provided by expect() and should() which use a chainable
-// language to construct assertions. The should() 
+// language to construct assertions. The should()
 // function has some issues when used in Internet Explorer,
 // so it will not be used in this demo.
 
@@ -98,7 +98,7 @@ describe('BDD test example for CalculatorWidget class \n', () => {
   });
 
   beforeEach(function() {
-    $("#widget").html('');
+    $("#widget").empty();
   });
 
   // showcases how to spy on functions to assert that a function has been invoked
@@ -118,7 +118,7 @@ describe('BDD test example for CalculatorWidget class \n', () => {
     // assert calculator.onSubmit was invoked
     expect(onSubmitSpy.called).to.equal(true);
     expect(onSubmitSpy.callCount).to.equal(1);
-    expect($("#result").val()).to.equal("8");
+    expect($("#result").val()).to.equal('8');
   });
 
   // showcases how to use stub to isolate a component being

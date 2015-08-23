@@ -52,10 +52,18 @@ gulp.task("build-source", function() {
              .js.pipe(gulp.dest(__dirname + "/build/source/"));
 });
 
+var tsTestProject = tsc.createProject({
+  removeComments : false,
+  noImplicitAny : false,
+  target : "ES5",
+  module : "commonjs",
+  declarationFiles : false
+});
+
 // compile test code
 gulp.task("build-test", function() {
   return gulp.src(__dirname + "/test/*.test.ts")
-             .pipe(tsc(tsProject))
+             .pipe(tsc(tsTestProject))
              .js.pipe(gulp.dest(__dirname + "/build/test/"));
 });
 
@@ -148,7 +156,7 @@ gulp.task("run-unit-test", function(cb) {
 /*
 * Run itegration (e2e) test
 * Before you can execute the e2e test:
-* $ gulp e2e-test
+* $ gulp run-e2e-test
 *
 * We need to run the application:
 * $ gulp serve
@@ -215,28 +223,19 @@ gulp.task('serve', function(cb) {
 });
 
 //******************************************************************************
-//* DEFAULT
+//* HELPERS AND DEFAULT
 //******************************************************************************
-// runtests
-gulp.task('test', function (cb) {
-  runSequence(
-    "lint",
-    ["build-source", "build-test"],
-    ["bundle-source", "bundle-test"],
-    ["run-unit-test", "run-e2e-test"],
-    "serve",
-    cb);
-});
-
-// default task
-gulp.task('default', function (cb) {
+// run tests
+gulp.task('run', function (cb) {
   runSequence(
     "lint",
     ["build-source", "build-test"],
     ["bundle-source", "bundle-test", "bundle-e2e-test"],
-    "document",
     ["run-unit-test"],
-    "compress",
-    "header",
+    "serve",
     cb);
 });
+
+// Run E2E tests:
+// selenium-standalone start (in a second console)
+// gulp run-e2e-test (in a third console)

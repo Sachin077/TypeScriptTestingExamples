@@ -4,8 +4,8 @@
 // they are just delcared in order to have some code that we
 // can test.
 
-import MathDemo = require("./math_demo");
-import CalculatorWidget = require("./calculator_widget");
+import { MathDemo } from "./math_demo";
+import { CalculatorWidget } from "./calculator_widget";
 
 var math = new MathDemo();
 

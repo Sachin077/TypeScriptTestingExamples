@@ -1,7 +1,7 @@
 ///<reference path="../source/interfaces.d.ts" />
 
-import MathDemo = require("../source/math_demo");
-import CalculatorWidget = require("../source/calculator_widget");
+import { MathDemo } from "../source/math_demo";
+import { CalculatorWidget } from "../source/calculator_widget";
 
 // Here we will write some test for the demos in the source
 // directory using a TDD style.TBDD style assertions are
@@ -125,7 +125,7 @@ describe('TDD test example for CalculatorWidget class \n', () => {
   });
 
   beforeEach(function() {
-    $("#widget").html('');
+    $("#widget").empty();
   });
 
   // showcases how to spy on functions to assert that a function has been invoked
@@ -145,7 +145,7 @@ describe('TDD test example for CalculatorWidget class \n', () => {
     // assert calculator.onSubmit was invoked
     assert.equal(onSubmitSpy.called, true);
     assert.equal(onSubmitSpy.callCount, 1);
-    assert.equal($("#result").val(), "8");
+    assert.equal($("#result").val(), '8');
   });
 
   // showcases how to use stub to isolate a component being
