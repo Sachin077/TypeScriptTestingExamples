@@ -230,9 +230,8 @@ gulp.task('run', function (cb) {
   runSequence(
     "lint",
     ["build-source", "build-test"],
-    ["bundle-source", "bundle-test", "bundle-e2e-test"],
+    ["bundle-source", "bundle-test"],
     ["run-unit-test"],
-    "serve",
     cb);
 });
 
